@@ -1,0 +1,26 @@
+# ============================================================
+# Personal Finance Manager — Python Dependencies
+# ============================================================
+# Pin exact versions for reproducibility.
+# After cloning, run: pip install -r requirements.txt
+
+# --- Web framework ---
+fastapi==0.111.0
+uvicorn[standard]==0.30.0     # ASGI server (runs the FastAPI app)
+
+# --- Database ---
+sqlalchemy==2.0.31            # ORM and SQL toolkit
+alembic==1.13.2               # Database migration management
+
+# --- Data validation and configuration ---
+pydantic==2.7.4               # Data validation (FastAPI uses this internally)
+pydantic-settings==2.3.4      # Reads configuration from environment variables
+python-dotenv==1.0.1          # Loads .env files into environment variables
+
+# --- Security (used later for authentication) ---
+# passlib[bcrypt]==1.7.4      # Password hashing — added when we implement auth
+# python-jose[cryptography]==3.3.0  # JWT tokens — added when we implement auth
+
+# --- Testing ---
+pytest==8.2.2                 # Test runner
+httpx==0.27.0                 # HTTP client used by FastAPI's TestClient

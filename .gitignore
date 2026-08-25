@@ -1,0 +1,61 @@
+# ============================================================
+# Personal Finance Manager — Git Ignore
+# ============================================================
+
+# --- Secrets (NEVER commit these) ---
+.env
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.whl
+*.so
+MANIFEST
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Database files (local development data) ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Test and coverage artifacts ---
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# --- IDE and editor files ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# --- Alembic (keep ini and versions, exclude generated temp files) ---
+alembic/__pycache__/
+
+# --- Logs ---
+*.log
+logs/

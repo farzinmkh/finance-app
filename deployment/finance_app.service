@@ -1,0 +1,49 @@
+[Unit]
+Description=Finance App FastAPI Application
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=notify
+User=finance_app
+Group=finance_app
+WorkingDirectory=/opt/finance_app
+
+# Environment variables loaded from systemd drop-in or .env file
+EnvironmentFile=/opt/finance_app/.env
+
+# Application startup command
+ExecStart=/opt/finance_app/.venv/bin/gunicorn \
+    --config /opt/finance_app/deployment/gunicorn_config.py \
+    --access-logfile - \
+    --error-logfile - \
+    main:app
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=600
+StartLimitBurst=3
+
+# Security: run as unprivileged user
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log/finance_app /var/tmp
+
+# Resource limits (prevent runaway processes)
+LimitNOFILE=65536
+LimitNPROC=512
+
+# Graceful shutdown
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Standard output/error to journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=finance_app
+
+[Install]
+WantedBy=multi-user.target
