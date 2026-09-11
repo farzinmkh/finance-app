@@ -3,13 +3,17 @@ Shared FastAPI Dependencies
 ============================
 get_current_user() is the single security gate for all protected routes.
 
-It replaces the temporary X-User-Id header used during development.
-
 How it works:
-    1. FastAPI's HTTPBearer extracts the token from Authorization: Bearer <token>
-    2. decode_access_token() validates the signature and expiry
-    3. The user_id from the token's 'sub' claim is used to look up the User
-    4. The User object is injected into the route handler
+    1. FastAPI's OAuth2PasswordBearer extracts the token from the
+       Authorization: Bearer <token> header. This is FastAPI's standard
+       OAuth2 Password + Bearer JWT integration, which is what makes the
+       "Authorize" button in Swagger UI work correctly: Swagger reads the
+       tokenUrl below, shows a username/password form, POSTs it to
+       /api/v1/auth/login, and stores the returned access_token for use
+       on every subsequent "Try it out" request.
+    2. decode_access_token() validates the signature and expiry.
+    3. The user_id from the token's 'sub' claim is used to look up the User.
+    4. The User object is injected into the route handler.
 
 If any step fails → HTTP 401 with WWW-Authenticate: Bearer header.
 
@@ -21,13 +25,15 @@ Why return User (not just UUID)?
 Security note:
     Never trust anything in the token payload without verifying the signature
     first. decode_access_token() enforces signature verification before any
-    payload data is used.
+    payload data is used. Route handlers must never accept a client-supplied
+    user_id for ownership decisions — the authenticated user's id from this
+    dependency is the only trusted source.
 """
 
 from uuid import UUID
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from domain.entities.user import User
@@ -38,14 +44,16 @@ from infrastructure.database.repositories.sqlalchemy_user_repository import (
 from infrastructure.database.session import get_db
 from infrastructure.security.jwt import decode_access_token
 
-# HTTPBearer extracts the token from the Authorization: Bearer header.
-# auto_error=False means we get None (not a 403) if the header is absent,
-# which lets us return a more informative 401 with our own message.
-_bearer = HTTPBearer(auto_error=False)
+# tokenUrl tells Swagger UI which endpoint to POST username/password to when
+# the "Authorize" button is used. It matches where auth.router is mounted
+# in main.py (prefix="/api/v1/auth"). auto_error=False means we get None
+# (not a FastAPI-generated 401) when the header is absent, so we can return
+# our own consistent error body via the same path as every other failure case.
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/login", auto_error=False)
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials | None = Depends(_bearer),
+    token: str | None = Depends(oauth2_scheme),
     db: Session = Depends(get_db),
 ) -> User:
     """
@@ -69,11 +77,11 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    if credentials is None:
+    if token is None:
         raise _401
 
     try:
-        payload = decode_access_token(credentials.credentials)
+        payload = decode_access_token(token)
     except AuthenticationError as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -35,7 +35,16 @@ from fastapi import FastAPI
 
 from config import settings
 from presentation.api.error_handlers import register_error_handlers
-from presentation.api.routers import health
+from presentation.api.routers import (
+    accounts,
+    auth,
+    budgets,
+    categories,
+    dashboard,
+    health,
+    transactions,
+    transfers,
+)
 
 
 def create_app() -> FastAPI:
@@ -62,13 +71,13 @@ def create_app() -> FastAPI:
     # Each router handles a group of related endpoints.
     # We add tags for grouping in the /docs interface.
     app.include_router(health.router, tags=["Health"])
-
-    # Future routers will be added here as we implement features:
-    # app.include_router(auth_router, prefix="/auth", tags=["Auth"])
-    # app.include_router(accounts_router, prefix="/accounts", tags=["Accounts"])
-    # app.include_router(transactions_router, prefix="/transactions", tags=["Transactions"])
-    # app.include_router(transfers_router, prefix="/transfers", tags=["Transfers"])
-    # app.include_router(categories_router, prefix="/categories", tags=["Categories"])
+    app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth"])
+    app.include_router(accounts.router, prefix="/api/v1/accounts", tags=["Accounts"])
+    app.include_router(categories.router, prefix="/api/v1/categories", tags=["Categories"])
+    app.include_router(transactions.router, prefix="/api/v1/transactions", tags=["Transactions"])
+    app.include_router(transfers.router, prefix="/api/v1/transfers", tags=["Transfers"])
+    app.include_router(budgets.router, prefix="/api/v1/budgets", tags=["Budgets"])
+    app.include_router(dashboard.router, prefix="/api/v1/dashboard", tags=["Dashboard"])
 
     # --- Register Exception Handlers ---
     # Maps domain exceptions (e.g. NotFoundError) to HTTP responses (e.g. 404).

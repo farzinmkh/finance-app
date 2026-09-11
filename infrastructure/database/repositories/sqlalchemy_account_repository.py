@@ -37,10 +37,11 @@ they all go through as one commit when the route returns successfully.
 from uuid import UUID
 
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from domain.entities.account import Account, AccountType
-from domain.exceptions import NotFoundError
+from domain.exceptions import ConflictError, NotFoundError
 from domain.repositories.account_repository import AccountRepository
 from infrastructure.database.models import AccountModel
 
@@ -132,6 +133,31 @@ class SQLAlchemyAccountRepository(AccountRepository):
 
         self._session.flush()
         return self._to_domain(model)
+
+    def delete(self, account_id: UUID, user_id: UUID) -> None:
+        """
+        Delete an account, enforcing ownership first.
+
+        accounts.id is referenced by transactions.account_id and
+        transfers.from_account_id/to_account_id, both ON DELETE RESTRICT.
+        If the account still has financial history, the database refuses
+        the delete with an IntegrityError, which we translate into a
+        ConflictError — a 409 is the correct, meaningful response for
+        "this account cannot be deleted while it still has transactions".
+        """
+        model = self._session.get(AccountModel, str(account_id))
+        if model is None or model.user_id != str(user_id):
+            return
+
+        try:
+            self._session.delete(model)
+            self._session.flush()
+        except IntegrityError:
+            raise ConflictError(
+                "This account cannot be deleted because it still has "
+                "transactions or transfers linked to it. Delete or "
+                "reassign them first."
+            )
 
     # ── Private mapping methods ───────────────────────────────────────────────
 

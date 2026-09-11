@@ -36,7 +36,7 @@ edited. The whole transfer must be deleted and recreated.
 """
 
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date as date_type
 from decimal import Decimal
 from uuid import UUID
 
@@ -55,7 +55,7 @@ class UpdateTransactionInput:
     # None means "leave this field unchanged" for most fields.
     amount: Decimal | None = None
     transaction_type: TransactionType | None = None
-    date: date | None = None
+    date: date_type | None = None
     notes: str | None = None
     # Category update uses a flag because None is ambiguous:
     #   category_id=None could mean "don't touch category" OR "clear it".

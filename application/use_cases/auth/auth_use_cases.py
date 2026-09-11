@@ -51,8 +51,7 @@ class LoginUser:
         self._repo = user_repository
 
     def execute(self, email: str, password: str) -> AuthOutput:
-        from domain.exceptions import NotFoundError
         user = self._repo.get_by_email(email.lower().strip())
         if user is None or not verify_password(password, user.hashed_password):
-            raise NotFoundError("Invalid email or password.")
+            raise AuthenticationError("Invalid email or password.")
         return AuthOutput(user_id=str(user.id), email=user.email)

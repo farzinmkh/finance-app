@@ -25,20 +25,22 @@ class SQLAlchemyTransactionRepository(TransactionRepository):
             return None
         return self._to_domain(model)
 
-    def list_by_filters(
+    def _filtered_statement(
         self,
         user_id: UUID,
-        account_id: UUID | None = None,
-        transaction_type: TransactionType | None = None,
-        category_id: UUID | None = None,
-        date_from: date | None = None,
-        date_to: date | None = None,
-    ) -> list[Transaction]:
-        stmt = (
-            select(TransactionModel)
-            .where(TransactionModel.user_id == str(user_id))
-            .order_by(TransactionModel.date.desc(), TransactionModel.created_at.desc())
-        )
+        account_id: UUID | None,
+        transaction_type: TransactionType | None,
+        category_id: UUID | None,
+        date_from: date | None,
+        date_to: date | None,
+    ):
+        """
+        Build the common WHERE clauses shared by list_by_filters and
+        count_by_filters, so the filter logic is defined exactly once.
+        Callers apply their own SELECT target, ordering, and pagination
+        on top of this.
+        """
+        stmt = select(TransactionModel).where(TransactionModel.user_id == str(user_id))
         if account_id is not None:
             stmt = stmt.where(TransactionModel.account_id == str(account_id))
         if transaction_type is not None:
@@ -49,7 +51,51 @@ class SQLAlchemyTransactionRepository(TransactionRepository):
             stmt = stmt.where(TransactionModel.date >= date_from)
         if date_to is not None:
             stmt = stmt.where(TransactionModel.date <= date_to)
+        return stmt
+
+    def list_by_filters(
+        self,
+        user_id: UUID,
+        account_id: UUID | None = None,
+        transaction_type: TransactionType | None = None,
+        category_id: UUID | None = None,
+        date_from: date | None = None,
+        date_to: date | None = None,
+        limit: int | None = None,
+        offset: int = 0,
+    ) -> list[Transaction]:
+        stmt = self._filtered_statement(
+            user_id, account_id, transaction_type, category_id, date_from, date_to
+        ).order_by(TransactionModel.date.desc(), TransactionModel.created_at.desc())
+
+        if offset:
+            stmt = stmt.offset(offset)
+        if limit is not None:
+            stmt = stmt.limit(limit)
+
         return [self._to_domain(m) for m in self._session.execute(stmt).scalars().all()]
+
+    def count_by_filters(
+        self,
+        user_id: UUID,
+        account_id: UUID | None = None,
+        transaction_type: TransactionType | None = None,
+        category_id: UUID | None = None,
+        date_from: date | None = None,
+        date_to: date | None = None,
+    ) -> int:
+        """
+        Count matching rows using the same filters as list_by_filters.
+
+        Built from the same _filtered_statement() to guarantee the count
+        and the page of results are always counting/selecting the same
+        logical set of rows.
+        """
+        filtered = self._filtered_statement(
+            user_id, account_id, transaction_type, category_id, date_from, date_to
+        ).subquery()
+        stmt = select(func.count()).select_from(filtered)
+        return self._session.execute(stmt).scalar_one()
 
     def list_recent(self, user_id: UUID, limit: int = 10) -> list[Transaction]:
         stmt = (

@@ -1,5 +1,6 @@
 """Transfer API Schemas"""
-from datetime import date, datetime
+from datetime import date as date_type
+from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
@@ -12,7 +13,7 @@ class CreateTransferRequest(BaseModel):
     from_account_id: UUID = Field(..., description="Source account UUID.")
     to_account_id: UUID = Field(..., description="Destination account UUID.")
     amount: Decimal = Field(..., gt=0, description="Transfer amount. Must be positive.")
-    date: date = Field(..., description="Financial date of the transfer (YYYY-MM-DD).")
+    date: date_type = Field(..., description="Financial date of the transfer (YYYY-MM-DD).")
     notes: str | None = Field(default=None, max_length=500, description="Optional notes.")
 
     @field_validator("amount")
@@ -29,7 +30,7 @@ class TransferResponse(BaseModel):
     from_account_id: UUID
     to_account_id: UUID
     amount: Decimal
-    date: date
+    date: date_type
     notes: str | None
     created_at: datetime
 
