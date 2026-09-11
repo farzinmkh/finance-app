@@ -32,6 +32,7 @@ MANIFEST
 venv/
 env/
 ENV/
+.env.production
 
 # --- Database files (local development data) ---
 *.db
