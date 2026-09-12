@@ -1,0 +1,145 @@
+/*
+  Design Tokens
+  =============
+  Single source of truth for color, spacing, radius, typography, and motion.
+  Components must reference these variables — never hard-code raw values.
+
+  Theme switching works by toggling a `data-theme` attribute on <html>.
+  See src/context/ThemeContext.jsx for the logic that sets this attribute.
+*/
+
+:root {
+  /* ---- Color: light theme (default) ---- */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-overlay: rgba(15, 23, 42, 0.48);
+
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-contrast: #ffffff;
+  --color-primary-soft: #eff6ff;
+
+  --color-text: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-on-primary: #ffffff;
+
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+
+  --color-income: #16a34a;
+  --color-income-soft: #f0fdf4;
+  --color-expense: #dc2626;
+  --color-expense-soft: #fef2f2;
+  --color-warning: #d97706;
+  --color-warning-soft: #fffbeb;
+
+  --color-focus-ring: #2563eb;
+  --shadow-color: 15, 23, 42;
+
+  /* ---- Typography ---- */
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --text-page-title-size: 1.75rem;
+  --text-page-title-weight: 700;
+  --text-page-title-line: 1.2;
+
+  --text-section-title-size: 1.25rem;
+  --text-section-title-weight: 600;
+  --text-section-title-line: 1.3;
+
+  --text-card-title-size: 1rem;
+  --text-card-title-weight: 600;
+  --text-card-title-line: 1.4;
+
+  --text-body-size: 0.9375rem;
+  --text-body-weight: 400;
+  --text-body-line: 1.6;
+
+  --text-secondary-size: 0.875rem;
+  --text-secondary-weight: 400;
+  --text-secondary-line: 1.55;
+
+  --text-label-size: 0.8125rem;
+  --text-label-weight: 500;
+  --text-label-line: 1.4;
+
+  --text-caption-size: 0.75rem;
+  --text-caption-weight: 400;
+  --text-caption-line: 1.4;
+
+  /* ---- Spacing scale (4px base unit) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  /* ---- Shadow (subtle, used sparingly) ---- */
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-color), 0.05);
+  --shadow-sm: 0 1px 3px rgba(var(--shadow-color), 0.08),
+    0 1px 2px rgba(var(--shadow-color), 0.04);
+  --shadow-md: 0 4px 12px rgba(var(--shadow-color), 0.08);
+  --shadow-lg: 0 12px 32px rgba(var(--shadow-color), 0.14);
+
+  /* ---- Motion ---- */
+  --transition-fast: 120ms ease;
+  --transition-base: 180ms ease;
+  --transition-slow: 280ms ease;
+
+  /* ---- Layout ---- */
+  --header-height: 64px;
+  --sidebar-width: 248px;
+  --container-max: 1200px;
+
+  /* ---- Breakpoints (referenced in comments; media queries can't read vars) ----
+     mobile:  <= 640px
+     tablet:  641px - 1024px
+     laptop:  1025px - 1439px
+     desktop: >= 1440px
+  */
+}
+
+/* ---- Color: dark theme ---- */
+[data-theme="dark"] {
+  --color-bg: #0b1220;
+  --color-surface: #111a2c;
+  --color-surface-hover: #17233a;
+  --color-overlay: rgba(2, 6, 15, 0.6);
+
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-primary-contrast: #061225;
+  --color-primary-soft: rgba(59, 130, 246, 0.12);
+
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-on-primary: #061225;
+
+  --color-border: #22314b;
+  --color-border-strong: #2f4066;
+
+  --color-income: #34d399;
+  --color-income-soft: rgba(52, 211, 153, 0.12);
+  --color-expense: #f87171;
+  --color-expense-soft: rgba(248, 113, 113, 0.12);
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgba(251, 191, 36, 0.12);
+
+  --color-focus-ring: #60a5fa;
+  --shadow-color: 0, 0, 0;
+}

@@ -1,0 +1,102 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.field__label {
+  color: var(--color-text);
+}
+
+.field__control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding-inline: var(--space-3);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.field__control:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
+
+.field__control--error {
+  border-color: var(--color-expense);
+}
+
+.field__control--error:focus-within {
+  box-shadow: 0 0 0 3px var(--color-expense-soft);
+}
+
+.field__input,
+.field__select,
+.field__textarea {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text);
+  height: 40px;
+  font-size: var(--text-body-size);
+}
+
+.field__textarea {
+  height: auto;
+  padding-block: var(--space-3);
+  resize: vertical;
+  min-height: 80px;
+  line-height: var(--text-body-line);
+}
+
+.field__input::placeholder,
+.field__textarea::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.field__input:disabled,
+.field__textarea:disabled,
+.field__select:disabled {
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+.field__adornment {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.field__hint {
+  color: var(--color-text-secondary);
+}
+
+.field__error {
+  color: var(--color-expense);
+}
+
+.field__select {
+  appearance: none;
+  padding-right: var(--space-6);
+  cursor: pointer;
+}
+
+.field__select-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.field__select-icon {
+  position: absolute;
+  right: 0;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
