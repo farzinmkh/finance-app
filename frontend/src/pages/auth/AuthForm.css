@@ -1,0 +1,20 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-form__submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.auth-form__footer {
+  text-align: center;
+  margin: 0;
+}
+
+.auth-form__footer a {
+  color: var(--color-primary);
+  font-weight: 600;
+}

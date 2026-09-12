@@ -1,0 +1,74 @@
+.mobile-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--bottom-nav-height);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: none;
+  align-items: stretch;
+  justify-content: space-around;
+  z-index: 40;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.mobile-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.mobile-nav__item--active {
+  color: var(--color-primary);
+}
+
+.mobile-nav__label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.mobile-nav__more-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mobile-nav__more-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-body-size);
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  min-height: 44px;
+}
+
+.mobile-nav__more-link:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.mobile-nav__more-link--danger {
+  color: var(--color-expense);
+}
+
+@media (max-width: 640px) {
+  .mobile-nav {
+    display: flex;
+  }
+}

@@ -1,0 +1,47 @@
+.page-container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.page-container__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.page-container__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.page-container__title {
+  color: var(--color-text);
+}
+
+.page-container__description {
+  margin: 0;
+}
+
+.page-container__actions {
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .page-container {
+    /* Bottom clearance for the fixed mobile nav is handled once, by
+       AppShell's .app-shell-layout__main — not duplicated here. */
+    padding: var(--space-4);
+  }
+
+  .page-container__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

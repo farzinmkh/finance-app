@@ -104,6 +104,8 @@
   /* ---- Layout ---- */
   --header-height: 64px;
   --sidebar-width: 248px;
+  --sidebar-width-collapsed: 76px;
+  --bottom-nav-height: 64px;
   --container-max: 1200px;
 
   /* ---- Breakpoints (referenced in comments; media queries can't read vars) ----

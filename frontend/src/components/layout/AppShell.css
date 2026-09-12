@@ -1,0 +1,30 @@
+.app-shell-layout {
+  min-height: 100vh;
+}
+
+.app-shell-layout__main {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell-layout__content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Tablet: sidebar collapses to an icon rail — reduce the offset to match. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .app-shell-layout__main {
+    margin-left: var(--sidebar-width-collapsed);
+  }
+}
+
+/* Mobile: no sidebar; leave room at the bottom for MobileBottomNav instead. */
+@media (max-width: 640px) {
+  .app-shell-layout__main {
+    margin-left: 0;
+    padding-bottom: var(--bottom-nav-height);
+  }
+}
