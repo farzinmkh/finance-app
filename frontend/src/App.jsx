@@ -10,6 +10,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RoutePlaceholder from "./pages/RoutePlaceholder";
 import Dashboard from "./pages/Dashboard";
+import Transactions from "./pages/Transactions";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 
@@ -49,10 +50,7 @@ export default function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route element={<AppShell />}>
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route
-                      path="/transactions"
-                      element={<RoutePlaceholder title="Transactions" />}
-                    />
+                    <Route path="/transactions" element={<Transactions />} />
                     <Route
                       path="/accounts"
                       element={<RoutePlaceholder title="Accounts" />}

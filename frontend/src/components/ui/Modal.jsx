@@ -10,8 +10,12 @@ import "./Overlay.css";
  *   ...body...
  *   <Modal.Footer><Button ...>Cancel</Button><Button variant="danger">Delete</Button></Modal.Footer>
  * </Modal>
+ *
+ * `panelClassName` is an optional escape hatch for a specific instance to
+ * override panel styling (e.g. going near-full-screen on mobile) without
+ * affecting every other Modal in the app.
  */
-export function Modal({ open, onClose, title, description, size = "md", children }) {
+export function Modal({ open, onClose, title, description, size = "md", panelClassName, children }) {
   const panelRef = useRef(null);
 
   useEscapeKey(onClose, open);
@@ -33,7 +37,7 @@ export function Modal({ open, onClose, title, description, size = "md", children
     <div className="overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose?.()}>
       <div
         ref={panelRef}
-        className={cn("overlay__panel", "overlay__panel--modal", `overlay__panel--${size}`)}
+        className={cn("overlay__panel", "overlay__panel--modal", `overlay__panel--${size}`, panelClassName)}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}

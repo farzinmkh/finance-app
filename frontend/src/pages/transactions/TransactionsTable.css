@@ -1,0 +1,101 @@
+.transactions-table-wrapper {
+  display: none;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table thead th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-caption-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-hover);
+}
+
+.transactions-table tbody td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.transactions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.transactions-table tbody tr:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.transactions-table__description {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.transactions-table__type-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.transactions-table__type-icon--income {
+  background-color: var(--color-income-soft);
+  color: var(--color-income);
+}
+
+.transactions-table__type-icon--expense {
+  background-color: var(--color-expense-soft);
+  color: var(--color-expense);
+}
+
+.transactions-table__transfer-badge {
+  flex-shrink: 0;
+}
+
+.transactions-table__amount-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.transactions-table__amount--income {
+  color: var(--color-income);
+}
+
+.transactions-table__amount--expense {
+  color: var(--color-text);
+}
+
+.transactions-table__actions-col {
+  width: 1%;
+  text-align: right;
+}
+
+/* Adaptive: hide the Account column at tablet widths to reduce crowding. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .transactions-table__account-col {
+    display: none;
+  }
+}
+
+/* Visible from tablet width up; TransactionsCardList takes over below it. */
+@media (min-width: 641px) {
+  .transactions-table-wrapper {
+    display: block;
+  }
+}

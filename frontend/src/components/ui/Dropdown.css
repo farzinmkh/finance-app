@@ -51,6 +51,15 @@
   color: var(--color-expense);
 }
 
+.dropdown__item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropdown__item:disabled:hover {
+  background-color: transparent;
+}
+
 .dropdown__separator {
   height: 1px;
   background-color: var(--color-border);
