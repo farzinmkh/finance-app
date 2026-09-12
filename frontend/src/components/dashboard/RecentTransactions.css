@@ -1,0 +1,88 @@
+.recent-transactions__header {
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.recent-transactions__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-transactions__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+}
+
+.recent-transactions__item:not(:last-child) {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.recent-transactions__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.recent-transactions__icon--income {
+  background-color: var(--color-income-soft);
+  color: var(--color-income);
+}
+
+.recent-transactions__icon--expense {
+  background-color: var(--color-expense-soft);
+  color: var(--color-expense);
+}
+
+.recent-transactions__item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-transactions__description {
+  color: var(--color-text);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-transactions__meta {
+  margin: 2px 0 0;
+}
+
+.recent-transactions__amount {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.recent-transactions__amount--income {
+  color: var(--color-income);
+}
+
+.recent-transactions__amount--expense {
+  color: var(--color-text);
+}
+
+.recent-transactions__empty {
+  padding: var(--space-4) var(--space-5);
+}
+
+.recent-transactions__footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.recent-transactions__view-all {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.recent-transactions__view-all:hover {
+  text-decoration: underline;
+}

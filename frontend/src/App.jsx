@@ -9,6 +9,7 @@ import { AppShell } from "./components/layout/AppShell";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RoutePlaceholder from "./pages/RoutePlaceholder";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 
@@ -47,10 +48,7 @@ export default function App() {
                 {/* Protected application routes */}
                 <Route element={<ProtectedRoute />}>
                   <Route element={<AppShell />}>
-                    <Route
-                      path="/dashboard"
-                      element={<RoutePlaceholder title="Dashboard" />}
-                    />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route
                       path="/transactions"
                       element={<RoutePlaceholder title="Transactions" />}

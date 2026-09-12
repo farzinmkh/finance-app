@@ -1,0 +1,14 @@
+.cash-flow-chart__canvas {
+  width: 100%;
+}
+
+.cash-flow-chart__canvas :focus {
+  outline: none;
+}
+
+.cash-flow-chart__empty {
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
