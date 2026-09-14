@@ -1,0 +1,46 @@
+.settings-general {
+  margin: 0;
+}
+
+.settings-general__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.settings-general__row dt {
+  color: var(--color-text-secondary);
+  min-width: 120px;
+}
+
+.settings-general__row dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.settings-currency {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 320px;
+}
+
+.settings-currency__hint {
+  margin: 0;
+}
+
+.settings-security {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-security__logout {
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .settings-currency {
+    max-width: none;
+  }
+}

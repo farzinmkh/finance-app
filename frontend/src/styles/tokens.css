@@ -37,6 +37,13 @@
   --color-focus-ring: #2563eb;
   --shadow-color: 15, 23, 42;
 
+  /* Text color for solid danger-tinted surfaces (buttons, etc). Tracked
+     separately from --color-text-on-primary because the two accent colors
+     can shift independently between themes (see the dark override below,
+     where --color-expense is brightened enough that white text would fail
+     contrast). */
+  --color-text-on-danger: #ffffff;
+
   /* ---- Chart categorical palette (donut/expense breakdown) ---- */
   --chart-1: #2563eb;
   --chart-2: #7c3aed;
@@ -140,6 +147,7 @@
   --color-text: #f1f5f9;
   --color-text-secondary: #94a3b8;
   --color-text-on-primary: #061225;
+  --color-text-on-danger: #2b0707;
 
   --color-border: #22314b;
   --color-border-strong: #2f4066;

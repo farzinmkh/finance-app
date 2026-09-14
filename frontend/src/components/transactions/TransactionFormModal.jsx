@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Modal } from "../ui/Modal";
 import { TransactionForm } from "./TransactionForm";
 import { buildInitialValues } from "../../utils/buildTransactionFormValues";
-import "./TransactionFormModal.css";
 
 const TITLES = {
   create: "Add transaction",
@@ -54,7 +53,7 @@ export function TransactionFormModal({
       onClose={submitting ? () => {} : onClose}
       title={TITLES[mode]}
       size="md"
-      panelClassName="transaction-form-modal-panel"
+      panelClassName="overlay__panel--fullscreen-mobile"
     >
       <TransactionForm
         mode={mode === "edit" ? "edit" : "create"}

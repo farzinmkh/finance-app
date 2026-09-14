@@ -6,8 +6,17 @@ import { Button } from "../../components/ui/Button";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 import { ApiError } from "../../services/apiClient";
+import { validateRegisterForm, hasErrors } from "../../utils/validateAuthForm";
 import "./AuthForm.css";
 
+/**
+ * No "Name" field: RegisterUserInput (application/use_cases/auth/
+ * auth_use_cases.py) only accepts email and password, and the User domain
+ * entity has no name field at all. Asking for a name here and silently
+ * discarding it would be actively misleading, so it's omitted rather than
+ * invented. Confirm Password has no backend counterpart either — it's
+ * pure client-side protection against typos, never sent to the API.
+ */
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -15,17 +24,18 @@ export default function Register() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setError(null);
+    setFormError(null);
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
+    const errors = validateRegisterForm({ email, password, confirmPassword });
+    setFieldErrors(errors);
+    if (hasErrors(errors)) return;
 
     setLoading(true);
     try {
@@ -41,7 +51,7 @@ export default function Register() {
         err instanceof ApiError
           ? err.message || "Couldn't create your account."
           : "Couldn't reach the server. Please try again.";
-      setError(message);
+      setFormError(message);
       addToast({ variant: "error", title: "Registration failed", description: message });
     } finally {
       setLoading(false);
@@ -56,20 +66,28 @@ export default function Register() {
           type="email"
           name="email"
           autoComplete="email"
-          required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          error={fieldErrors.email}
         />
         <Input
           label="Password"
           type="password"
           name="password"
           autoComplete="new-password"
-          required
-          hint="At least 8 characters."
+          hint={!fieldErrors.password ? "At least 8 characters." : undefined}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          error={error || undefined}
+          error={fieldErrors.password}
+        />
+        <Input
+          label="Confirm password"
+          type="password"
+          name="confirmPassword"
+          autoComplete="new-password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          error={fieldErrors.confirmPassword || formError}
         />
         <Button type="submit" loading={loading} className="auth-form__submit">
           Create account

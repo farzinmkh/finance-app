@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Receipt } from "lucide-react";
 import { PageContainer } from "../components/layout/PageContainer";
@@ -53,6 +53,20 @@ export default function Transactions() {
   );
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
+
+  // Seeds the account filter from ?account=<id> (set by the Accounts page's
+  // "View Transactions" action), then drops the param — same one-shot
+  // pattern as ?action=create below, rather than keeping the URL and filter
+  // state in sync generally, which is out of scope for this phase.
+  useEffect(() => {
+    const accountId = searchParams.get("account");
+    if (accountId) {
+      updateFilters({ accountId });
+      searchParams.delete("account");
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const categoriesById = useMemo(
     () => new Map(referenceData.categories.map((c) => [c.id, c])),

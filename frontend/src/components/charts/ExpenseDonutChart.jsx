@@ -22,7 +22,13 @@ const PALETTE = [
  * `amount` may be a Decimal-as-string from the API; converted to Number here
  * for the chart only (display purposes, not arithmetic).
  */
-export function ExpenseDonutChart({ data, loading = false, empty = false }) {
+export function ExpenseDonutChart({
+  data,
+  loading = false,
+  empty = false,
+  title = "Expense Breakdown",
+  subtitle = "Where your money went this period",
+}) {
   const chartData = (data || []).map((item, index) => ({
     name: item.category_name,
     value: Number(item.amount),
@@ -32,7 +38,7 @@ export function ExpenseDonutChart({ data, loading = false, empty = false }) {
 
   return (
     <Card className="expense-donut">
-      <Card.Header title="Expense Breakdown" subtitle="Where your money went this period" />
+      <Card.Header title={title} subtitle={subtitle} />
 
       {loading ? (
         <div className="expense-donut__loading">

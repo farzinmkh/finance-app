@@ -4,6 +4,13 @@
   gap: var(--space-4);
 }
 
+.auth-form__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: calc(var(--space-2) * -1);
+}
+
 .auth-form__submit {
   width: 100%;
   margin-top: var(--space-2);

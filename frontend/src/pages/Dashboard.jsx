@@ -11,6 +11,7 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { formatCurrency, formatPercent } from "../utils/format";
+import { usePreferences } from "../hooks/usePreferences";
 import "./Dashboard.css";
 
 /**
@@ -32,6 +33,7 @@ function buildTrend(changePercent, { invert = false } = {}) {
 
 export default function Dashboard() {
   const { status, data, usingPlaceholder, refetch } = useDashboardSummary();
+  const { currency } = usePreferences();
 
   const loading = status === "loading";
 
@@ -77,7 +79,7 @@ export default function Dashboard() {
           tone="primary"
           title="Total Balance"
           loading={loading}
-          amount={!loading && formatCurrency(data.total_balance)}
+          amount={!loading && formatCurrency(data.total_balance, { currency })}
           secondary={
             !loading &&
             `${data.accounts_count} account${data.accounts_count === 1 ? "" : "s"}`
@@ -88,7 +90,7 @@ export default function Dashboard() {
           tone="income"
           title="Income"
           loading={loading}
-          amount={!loading && formatCurrency(data.income.amount)}
+          amount={!loading && formatCurrency(data.income.amount, { currency })}
           secondary={!loading && "This period"}
           trend={!loading ? buildTrend(data.income.change_percent) : null}
         />
@@ -97,7 +99,7 @@ export default function Dashboard() {
           tone="expense"
           title="Expenses"
           loading={loading}
-          amount={!loading && formatCurrency(data.expenses.amount)}
+          amount={!loading && formatCurrency(data.expenses.amount, { currency })}
           secondary={!loading && "This period"}
           trend={!loading ? buildTrend(data.expenses.change_percent, { invert: true }) : null}
         />
@@ -106,7 +108,7 @@ export default function Dashboard() {
           tone="warning"
           title="Savings"
           loading={loading}
-          amount={!loading && formatCurrency(data.savings.amount)}
+          amount={!loading && formatCurrency(data.savings.amount, { currency })}
           secondary={
             !loading &&
             data.savings.rate_percent !== null &&

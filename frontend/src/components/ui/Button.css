@@ -79,7 +79,7 @@
 
 .btn--danger {
   background-color: var(--color-expense);
-  color: #ffffff;
+  color: var(--color-text-on-danger);
 }
 .btn--danger:hover:not(:disabled) {
   filter: brightness(0.92);

@@ -1,0 +1,49 @@
+.theme-option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.theme-option:hover {
+  border-color: var(--color-border-strong);
+}
+
+.theme-option--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.theme-option__label {
+  color: var(--color-text);
+  margin-top: var(--space-1);
+}
+
+.theme-option--active .theme-option__label {
+  color: var(--color-primary);
+}
+
+.theme-option__description {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 640px) {
+  .theme-option-grid {
+    grid-template-columns: 1fr;
+  }
+}

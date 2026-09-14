@@ -1,0 +1,55 @@
+.top-categories-list__header {
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.top-categories-list__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-3);
+}
+
+.top-categories-list__table thead th {
+  text-align: left;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-caption-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.top-categories-list__table tbody td {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.top-categories-list__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.top-categories-list__swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  margin-right: var(--space-2);
+}
+
+.top-categories-list__amount-col,
+.top-categories-list__percent-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.top-categories-list__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.top-categories-list__empty {
+  padding: var(--space-2) var(--space-5) var(--space-5);
+}
